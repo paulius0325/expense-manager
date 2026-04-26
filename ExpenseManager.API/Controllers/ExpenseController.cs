@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ExpenseManager.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/expense")]
     public class ExpenseController : ControllerBase
     {
         private readonly IExpenseService _service;

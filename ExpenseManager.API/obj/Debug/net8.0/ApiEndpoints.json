@@ -2,7 +2,7 @@
   {
     "ContainingType": "ExpenseManager.API.Controllers.ExpenseController",
     "Method": "CreateExpense",
-    "RelativePath": "api/Expense",
+    "RelativePath": "api/expense",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,

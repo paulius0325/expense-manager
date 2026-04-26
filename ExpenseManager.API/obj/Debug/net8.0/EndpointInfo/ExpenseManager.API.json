@@ -5,7 +5,7 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Expense": {
+    "/api/expense": {
       "post": {
         "tags": [
           "Expense"
@@ -40,22 +40,37 @@
   "components": {
     "schemas": {
       "CreateExpenseDto": {
+        "required": [
+          "category",
+          "title"
+        ],
         "type": "object",
         "properties": {
           "title": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
           },
           "amount": {
+            "minimum": 0.01,
             "type": "number",
             "format": "double"
           },
           "category": {
-            "type": "string",
-            "nullable": true
+            "$ref": "#/components/schemas/ExpenseCategory"
           }
         },
         "additionalProperties": false
+      },
+      "ExpenseCategory": {
+        "enum": [
+          "Food",
+          "Travel",
+          "Utilities",
+          "Entertainment",
+          "Other"
+        ],
+        "type": "string"
       }
     }
   }
