@@ -7,30 +7,29 @@ export default function ExpenseForm({ onSubmit }) {
     category: ""
   });
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    });
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!form.title.trim())
+      newErrors.title = "Title is required";
+
+    if (!form.amount || Number(form.amount) <= 0)
+      newErrors.amount = "Amount must be greater than 0";
+
+    if (!form.category.trim())
+      newErrors.category = "Category is required";
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!form.title.trim()) {
-      alert("Title required");
-      return;
-    }
-
-    if (Number(form.amount) <= 0) {
-      alert("Amount must be > 0");
-      return;
-    }
-
-    if (!form.category.trim()) {
-      alert("Category required");
-      return;
-    }
+    if (!validate()) return;
 
     onSubmit({
       title: form.title.trim(),
@@ -42,26 +41,26 @@ export default function ExpenseForm({ onSubmit }) {
   return (
     <form onSubmit={handleSubmit}>
       <input
-        name="title"
         placeholder="Title"
         value={form.title}
-        onChange={handleChange}
+        onChange={(e) => setForm({ ...form, title: e.target.value })}
       />
+      {errors.title && <p style={{ color: "red" }}>{errors.title}</p>}
 
       <input
-        name="amount"
         type="number"
         placeholder="Amount"
         value={form.amount}
-        onChange={handleChange}
+        onChange={(e) => setForm({ ...form, amount: e.target.value })}
       />
+      {errors.amount && <p style={{ color: "red" }}>{errors.amount}</p>}
 
       <input
-        name="category"
         placeholder="Category"
         value={form.category}
-        onChange={handleChange}
+        onChange={(e) => setForm({ ...form, category: e.target.value })}
       />
+      {errors.category && <p style={{ color: "red" }}>{errors.category}</p>}
 
       <button type="submit">Add Expense</button>
     </form>

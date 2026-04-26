@@ -5,18 +5,29 @@ import { useState } from "react";
 export default function Home() {
   const [message, setMessage] = useState("");
 
-  const handleCreate = async (data) => {
-    try {
-      await createExpense(data);
+ const handleCreate = async (data) => {
+  try {
+    const res = await createExpense(data);
 
-      setMessage("success: expense created");
-    } catch (err) {
-      const errorMsg =
-        err.response?.data?.error || "error: something went wrong";
+    setMessage({
+      type: "success",
+      text: "Expense created successfully"
+    });
 
-      setMessage(errorMsg);
-    }
-  };
+  } catch (err) {
+    console.log(err);
+
+    const apiError =
+      err.response?.data?.error ||
+      err.response?.data?.title ||
+      "Unexpected error occurred";
+
+    setMessage({
+      type: "error",
+      text: apiError
+    });
+  }
+};
 
   return (
     <div>
@@ -24,9 +35,10 @@ export default function Home() {
 
       <ExpenseForm onSubmit={handleCreate} />
 
-      <p style={{ color: message.includes("success") ? "green" : "red" }}>
-        {message}
-      </p>
+      {message && (
+  <p style={{ color: message.type === "success" ? "green" : "red" }}>
+    {message.text}
+  </p>)}
     </div>
   );
 }
