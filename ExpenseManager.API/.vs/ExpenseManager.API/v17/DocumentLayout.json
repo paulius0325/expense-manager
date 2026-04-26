@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\PC\\source\\expense-manager\\ExpenseManager.API\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A40C5D52-E224-731B-65F6-03A907B84DFA}|ExpenseManager.API.csproj|c:\\users\\pc\\source\\expense-manager\\expensemanager.api\\data\\expensemanagerdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A40C5D52-E224-731B-65F6-03A907B84DFA}|ExpenseManager.API.csproj|solutionrelative:data\\expensemanagerdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A40C5D52-E224-731B-65F6-03A907B84DFA}|ExpenseManager.API.csproj|c:\\users\\pc\\source\\expense-manager\\expensemanager.api\\models\\expense.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A40C5D52-E224-731B-65F6-03A907B84DFA}|ExpenseManager.API.csproj|solutionrelative:models\\expense.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A40C5D52-E224-731B-65F6-03A907B84DFA}|ExpenseManager.API.csproj|c:\\users\\pc\\source\\expense-manager\\expensemanager.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A40C5D52-E224-731B-65F6-03A907B84DFA}|ExpenseManager.API.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -67,6 +75,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ExpenseManagerDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\expense-manager\\ExpenseManager.API\\Data\\ExpenseManagerDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ExpenseManagerDbContext.cs",
+              "ToolTip": "C:\\Users\\PC\\source\\expense-manager\\ExpenseManager.API\\Data\\ExpenseManagerDbContext.cs",
+              "RelativeToolTip": "Data\\ExpenseManagerDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T10:49:26.305Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Expense.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\source\\expense-manager\\ExpenseManager.API\\Models\\Expense.cs",
+              "RelativeDocumentMoniker": "Models\\Expense.cs",
+              "ToolTip": "C:\\Users\\PC\\source\\expense-manager\\ExpenseManager.API\\Models\\Expense.cs",
+              "RelativeToolTip": "Models\\Expense.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T10:41:51.411Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\PC\\source\\expense-manager\\ExpenseManager.API\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
