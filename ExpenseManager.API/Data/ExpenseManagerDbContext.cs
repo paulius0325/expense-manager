@@ -1,6 +1,5 @@
 ﻿using ExpenseManager.API.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace ExpenseManager.API.Data
 {

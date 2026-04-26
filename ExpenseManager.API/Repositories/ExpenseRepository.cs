@@ -1,6 +1,8 @@
-﻿namespace ExpenseManager.API.Repositories
+﻿using ExpenseManager.API.Repositories.Interfaces;
+
+namespace ExpenseManager.API.Repositories
 {
-    public class ExpenseRepository
+    public class ExpenseRepository : IExpenseRepository
     {
     }
 }

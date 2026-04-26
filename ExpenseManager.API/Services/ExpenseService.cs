@@ -1,6 +1,8 @@
-﻿namespace ExpenseManager.API.Services
+﻿using ExpenseManager.API.Services.Interfaces;
+
+namespace ExpenseManager.API.Services
 {
-    public class ExpenseService
+    public class ExpenseService : IExpenseService
     {
     }
 }

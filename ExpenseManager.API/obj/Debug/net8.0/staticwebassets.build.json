@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "9OR2Y2T75mFafI8lBk6zI4lZzZBFT45wKCPajfVy/KA=",
+  "Source": "ExpenseManager.API",
+  "BasePath": "_content/ExpenseManager.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
