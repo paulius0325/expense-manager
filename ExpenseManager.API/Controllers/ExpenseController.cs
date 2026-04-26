@@ -19,7 +19,7 @@ namespace ExpenseManager.API.Controllers
         public async Task<IActionResult> CreateExpense([FromBody] CreateExpenseDto dto)
         {
             var result = await _service.CreateAsync(dto);
-            return Ok(dto);
+            return CreatedAtAction(nameof(CreateExpense), result);
         }
     }
 }
