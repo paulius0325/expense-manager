@@ -1,3 +1,8 @@
+using ExpenseManager.API.Repositories;
+using ExpenseManager.API.Repositories.Interfaces;
+using ExpenseManager.API.Services;
+using ExpenseManager.API.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -6,6 +11,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//builder.Services.AddScoped<IExpenseService, ExpenseService>();
+//builder.Services.AddScoped<IExpenseRepository, ExpenseRepository>();
 
 var app = builder.Build();
 
