@@ -6,3 +6,6 @@ export const createExpense = (data) =>
 
 export const getExpenses = () =>
   axios.get(`${API_URL}/expense`);
+
+export const deleteExpense = (id) =>
+  axios.delete(`${API_URL}/expense/${id}`);
