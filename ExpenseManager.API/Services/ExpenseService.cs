@@ -77,5 +77,17 @@ namespace ExpenseManager.API.Services
                 CreatedAt = e.CreatedAt
             });
         }
+
+        public async Task DeleteAsync(int id)
+        {
+            var expense = await _repository.GetByIdAsync(id);
+
+            if (expense == null)
+                throw new KeyNotFoundException("Expense not found");
+
+            await _repository.DeleteAsync(expense);
+        }
+
+
     }
 }

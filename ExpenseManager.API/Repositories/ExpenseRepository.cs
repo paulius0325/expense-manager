@@ -26,5 +26,16 @@ namespace ExpenseManager.API.Repositories
                 .OrderByDescending(e => e.CreatedAt)
                 .ToListAsync();
         }
+
+        public async Task<Expense?> GetByIdAsync(int id)
+        {
+            return await _context.Expenses.FindAsync(id);
+        }
+
+        public async Task DeleteAsync(Expense expense)
+        {
+            _context.Expenses.Remove(expense);
+            await _context.SaveChangesAsync();
+        }
     }
 }

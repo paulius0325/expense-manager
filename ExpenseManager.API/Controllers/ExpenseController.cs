@@ -28,5 +28,12 @@ namespace ExpenseManager.API.Controllers
             var expenses = await _service.GetAllAsync();
             return Ok(expenses);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteExpense(int id)
+        {
+            await _service.DeleteAsync(id);
+            return NoContent();
+        }
     }
 }

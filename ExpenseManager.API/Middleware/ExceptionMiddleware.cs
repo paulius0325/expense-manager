@@ -25,6 +25,11 @@ namespace ExpenseManager.API.Middleware
                 _logger.LogWarning(ex, "Validation error");
                 await HandleException(context, ex.Message, HttpStatusCode.BadRequest);
             }
+            catch (KeyNotFoundException ex)
+            {
+                _logger.LogWarning(ex, "Not found");
+                await HandleException(context, ex.Message, HttpStatusCode.NotFound);
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Unhandled exception"); 
