@@ -1,6 +1,7 @@
 ﻿using ExpenseManager.API.Dtos;
 using ExpenseManager.API.Dtos.Create;
 using ExpenseManager.API.Models;
+using ExpenseManager.API.Models.Enum;
 using ExpenseManager.API.Repositories.Interfaces;
 using ExpenseManager.API.Services.Interfaces;
 
@@ -42,6 +43,9 @@ namespace ExpenseManager.API.Services
                 _logger.LogWarning("Title is empty or null");
                 throw new ArgumentException("Title is required");
             }
+
+            if (!Enum.IsDefined(typeof(ExpenseCategory), dto.Category))
+                throw new ArgumentException("Invalid category");
 
             var expense = new Expense
             {
