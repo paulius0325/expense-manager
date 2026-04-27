@@ -21,5 +21,12 @@ namespace ExpenseManager.API.Controllers
             var result = await _service.CreateAsync(dto);
             return CreatedAtAction(nameof(CreateExpense), result);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetExpenses()
+        {
+            var expenses = await _service.GetAllAsync();
+            return Ok(expenses);
+        }
     }
 }

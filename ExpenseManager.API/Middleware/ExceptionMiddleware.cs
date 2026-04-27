@@ -8,9 +8,7 @@ namespace ExpenseManager.API.Middleware
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionMiddleware> _logger;
 
-        public ExceptionMiddleware(
-            RequestDelegate next,
-            ILogger<ExceptionMiddleware> logger)
+        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
         {
             _next = next;
             _logger = logger;
@@ -24,28 +22,17 @@ namespace ExpenseManager.API.Middleware
             }
             catch (ArgumentException ex)
             {
-                _logger.LogWarning(ex, "Validation error occurred");
-
-                await HandleException(
-                    context,
-                    ex.Message,
-                    HttpStatusCode.BadRequest);
+                _logger.LogWarning(ex, "Validation error");
+                await HandleException(context, ex.Message, HttpStatusCode.BadRequest);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled exception occurred");
-
-                await HandleException(
-                    context,
-                    "Internal server error",
-                    HttpStatusCode.InternalServerError);
+                _logger.LogError(ex, "Unhandled exception"); 
+                await HandleException(context, "Internal server error", HttpStatusCode.InternalServerError);
             }
         }
 
-        private static async Task HandleException(
-            HttpContext context,
-            string message,
-            HttpStatusCode statusCode)
+        private static async Task HandleException(HttpContext context, string message, HttpStatusCode statusCode)
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)statusCode;
@@ -55,9 +42,7 @@ namespace ExpenseManager.API.Middleware
                 error = message
             };
 
-            var json = JsonSerializer.Serialize(response);
-
-            await context.Response.WriteAsync(json);
+            await context.Response.WriteAsync(JsonSerializer.Serialize(response));
         }
     }
 }

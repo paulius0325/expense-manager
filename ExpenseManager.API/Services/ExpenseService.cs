@@ -1,4 +1,5 @@
-﻿using ExpenseManager.API.Dtos.Create;
+﻿using ExpenseManager.API.Dtos;
+using ExpenseManager.API.Dtos.Create;
 using ExpenseManager.API.Models;
 using ExpenseManager.API.Repositories.Interfaces;
 using ExpenseManager.API.Services.Interfaces;
@@ -57,6 +58,20 @@ namespace ExpenseManager.API.Services
             _logger.LogInformation("Expense created successfully with Title: {Title}", expense.Title);
 
             return expense;
+        }
+
+        public async Task<IEnumerable<ExpenseDto>> GetAllAsync()
+        {
+            var expenses = await _repository.GetAllAsync();
+
+            return expenses.Select(e => new ExpenseDto
+            {
+                Id = e.Id,
+                Title = e.Title,
+                Amount = e.Amount,
+                Category = e.Category.ToString(),
+                CreatedAt = e.CreatedAt
+            });
         }
     }
 }
