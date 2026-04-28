@@ -18,7 +18,7 @@ export default function ExpenseForm({ onSubmit }) {
     if (!form.amount || Number(form.amount) <= 0)
       newErrors.amount = "Amount must be greater than 0";
 
-    if (!form.category.trim())
+    if (!form.category)
       newErrors.category = "Category is required";
 
     setErrors(newErrors);
@@ -34,12 +34,20 @@ export default function ExpenseForm({ onSubmit }) {
     onSubmit({
       title: form.title.trim(),
       amount: Number(form.amount),
-      category: form.category.trim()
+      category: form.category 
+    });
+
+    // reset form
+    setForm({
+      title: "",
+      amount: "",
+      category: ""
     });
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {/* TITLE */}
       <input
         placeholder="Title"
         value={form.title}
@@ -47,6 +55,7 @@ export default function ExpenseForm({ onSubmit }) {
       />
       {errors.title && <p style={{ color: "red" }}>{errors.title}</p>}
 
+      {/* AMOUNT */}
       <input
         type="number"
         placeholder="Amount"
@@ -55,11 +64,18 @@ export default function ExpenseForm({ onSubmit }) {
       />
       {errors.amount && <p style={{ color: "red" }}>{errors.amount}</p>}
 
-      <input
-        placeholder="Category"
+      {/* CATEGORY DROPDOWN */}
+      <select
         value={form.category}
         onChange={(e) => setForm({ ...form, category: e.target.value })}
-      />
+      >
+        <option value="">Select category</option>
+        <option value="Food">Food</option>
+        <option value="Travel">Travel</option>
+        <option value="Utilities">Utilities</option>
+        <option value="Entertainment">Entertainment</option>
+        <option value="Other">Other</option>
+      </select>
       {errors.category && <p style={{ color: "red" }}>{errors.category}</p>}
 
       <button type="submit">Add Expense</button>

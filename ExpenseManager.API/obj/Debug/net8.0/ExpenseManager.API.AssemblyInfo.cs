@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ExpenseManager.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a7e3368b70821def41c99d50cb2054603a6f013f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2fe82315ac8ff6143415fb152d92c8a2fe7d2edf")]
 [assembly: System.Reflection.AssemblyProductAttribute("ExpenseManager.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ExpenseManager.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
