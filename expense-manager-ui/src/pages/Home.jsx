@@ -6,18 +6,18 @@ export default function Home() {
   const [message, setMessage] = useState("");
   const [expenses, setExpenses] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   // GET logika
   const loadExpenses = async () => {
-    try {
-      setHasLoaded(true);
-      const res = await getExpenses();
-      setExpenses(res.data);
-    } catch (err) {
-      setMessage("error loading expenses");
-    }
-  };
-
+  try {
+    setHasLoaded(true);
+    const res = await getExpenses(selectedCategory);
+    setExpenses(res.data);
+  } catch (err) {
+    setMessage("error loading expenses");
+  }
+};
   // CREATE
   const handleCreate = async (data) => {
     try {
@@ -61,9 +61,18 @@ export default function Home() {
 
       <h2>Expenses</h2>
 
-      
+    <select
+      value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+      <option value="">All</option>
+      <option value="Food">Food</option>
+      <option value="Travel">Travel</option>
+      <option value="Utilities">Utilities</option>
+      <option value="Entertainment">Entertainment</option>
+      <option value="Other">Other</option>
+    </select>
+
       <button onClick={loadExpenses}>
-        Load Expenses
+        Filter
       </button>
 
       

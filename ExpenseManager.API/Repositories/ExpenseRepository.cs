@@ -1,5 +1,6 @@
 ﻿using ExpenseManager.API.Data;
 using ExpenseManager.API.Models;
+using ExpenseManager.API.Models.Enum;
 using ExpenseManager.API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,9 +21,23 @@ namespace ExpenseManager.API.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Expense>> GetAllAsync()
+        public async Task<IEnumerable<Expense>> GetAllAsync(string? category)
         {
-            return await _context.Expenses
+            var query = _context.Expenses.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(category))
+            {
+                if (Enum.TryParse<ExpenseCategory>(category, true, out var parsed))
+                {
+                    query = query.Where(e => e.Category == parsed);
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid category");
+                }
+            }
+
+            return await query
                 .OrderByDescending(e => e.CreatedAt)
                 .ToListAsync();
         }
