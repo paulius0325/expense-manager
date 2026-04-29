@@ -50,7 +50,10 @@ export default function Home() {
     <div className="container">
       <h1>Expense Manager</h1>
 
-      <ExpenseForm onSubmit={handleCreate} />
+      
+      <div className="section">
+        <ExpenseForm onSubmit={handleCreate} />
+      </div>
 
       {message && (
         <p
@@ -83,9 +86,9 @@ export default function Home() {
           </button>
         </div>
 
-        {/* SCRUM-185 – TEISINGA VIETA */}
+        
         {hasLoaded && expenses.length === 0 && (
-          <p>No expenses found</p>
+          <div className="empty">No expenses found</div>
         )}
 
         {expenses.length > 0 && (

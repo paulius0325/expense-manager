@@ -14,6 +14,8 @@ export default function ExpenseForm({ onSubmit }) {
 
     if (!form.title.trim())
       newErrors.title = "Title is required";
+    else if (!/^[a-zA-Z\s]+$/.test(form.title))
+      newErrors.title = "Title must contain only letters";
 
     if (!form.amount || Number(form.amount) <= 0)
       newErrors.amount = "Amount must be greater than 0";
@@ -45,7 +47,7 @@ export default function ExpenseForm({ onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="section">
+    <form onSubmit={handleSubmit}>
       <div className="form-row">
         <input
           placeholder="Title"
@@ -77,9 +79,9 @@ export default function ExpenseForm({ onSubmit }) {
         </button>
       </div>
 
-      {errors.title && <p className="error">{errors.title}</p>}
-      {errors.amount && <p className="error">{errors.amount}</p>}
-      {errors.category && <p className="error">{errors.category}</p>}
+      {errors.title && <div className="error-box">{errors.title}</div>}
+      {errors.amount && <div className="error-box">{errors.amount}</div>}
+      {errors.category && <div className="error-box">{errors.category}</div>}
     </form>
   );
 }
