@@ -34,10 +34,9 @@ export default function ExpenseForm({ onSubmit }) {
     onSubmit({
       title: form.title.trim(),
       amount: Number(form.amount),
-      category: form.category 
+      category: form.category
     });
 
-    // reset form
     setForm({
       title: "",
       amount: "",
@@ -46,39 +45,41 @@ export default function ExpenseForm({ onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {/* TITLE */}
-      <input
-        placeholder="Title"
-        value={form.title}
-        onChange={(e) => setForm({ ...form, title: e.target.value })}
-      />
-      {errors.title && <p style={{ color: "red" }}>{errors.title}</p>}
+    <form onSubmit={handleSubmit} className="section">
+      <div className="form-row">
+        <input
+          placeholder="Title"
+          value={form.title}
+          onChange={(e) => setForm({ ...form, title: e.target.value })}
+        />
 
-      {/* AMOUNT */}
-      <input
-        type="number"
-        placeholder="Amount"
-        value={form.amount}
-        onChange={(e) => setForm({ ...form, amount: e.target.value })}
-      />
-      {errors.amount && <p style={{ color: "red" }}>{errors.amount}</p>}
+        <input
+          type="number"
+          placeholder="Amount"
+          value={form.amount}
+          onChange={(e) => setForm({ ...form, amount: e.target.value })}
+        />
 
-      {/* CATEGORY DROPDOWN */}
-      <select
-        value={form.category}
-        onChange={(e) => setForm({ ...form, category: e.target.value })}
-      >
-        <option value="">Select category</option>
-        <option value="Food">Food</option>
-        <option value="Travel">Travel</option>
-        <option value="Utilities">Utilities</option>
-        <option value="Entertainment">Entertainment</option>
-        <option value="Other">Other</option>
-      </select>
-      {errors.category && <p style={{ color: "red" }}>{errors.category}</p>}
+        <select
+          value={form.category}
+          onChange={(e) => setForm({ ...form, category: e.target.value })}
+        >
+          <option value="">Select category</option>
+          <option value="Food">Food</option>
+          <option value="Travel">Travel</option>
+          <option value="Utilities">Utilities</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Other">Other</option>
+        </select>
 
-      <button type="submit">Add Expense</button>
+        <button type="submit" className="btn primary">
+          Add Expense
+        </button>
+      </div>
+
+      {errors.title && <p className="error">{errors.title}</p>}
+      {errors.amount && <p className="error">{errors.amount}</p>}
+      {errors.category && <p className="error">{errors.category}</p>}
     </form>
   );
 }

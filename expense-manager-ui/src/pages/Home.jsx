@@ -47,64 +47,79 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Expense Manager</h1>
 
       <ExpenseForm onSubmit={handleCreate} />
 
       {message && (
-        <p style={{ color: message.includes("success") ? "green" : "red" }}>
+        <p
+          className={`message ${
+            message.includes("success") ? "success" : "error-message"
+          }`}
+        >
           {message}
         </p>
       )}
 
-      <h2>Expenses</h2>
+      <div className="section">
+        <h2>Expenses</h2>
 
-      {/* FILTER */}
-      <select
-        value={selectedCategory}
-        onChange={(e) => setSelectedCategory(e.target.value)}
-      >
-        <option value="">All</option>
-        <option value="Food">Food</option>
-        <option value="Travel">Travel</option>
-        <option value="Utilities">Utilities</option>
-        <option value="Entertainment">Entertainment</option>
-        <option value="Other">Other</option>
-      </select>
+        <div className="form-row">
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            <option value="">All</option>
+            <option value="Food">Food</option>
+            <option value="Travel">Travel</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Other">Other</option>
+          </select>
 
-      <button onClick={loadExpenses}>Filter</button>
+          <button className="btn primary" onClick={loadExpenses}>
+            Filter
+          </button>
+        </div>
 
-      {hasLoaded && expenses.length === 0 && <p>No expenses found</p>}
+        {/* SCRUM-185 – TEISINGA VIETA */}
+        {hasLoaded && expenses.length === 0 && (
+          <p>No expenses found</p>
+        )}
 
-      {expenses.length > 0 && (
-        <table border="1">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Amount</th>
-              <th>Category</th>
-              <th>Created At</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {expenses.map((e) => (
-              <tr key={e.id}>
-                <td>{e.title}</td>
-                <td>{e.amount}</td>
-                <td>{e.category}</td>
-                <td>{new Date(e.createdAt).toLocaleString()}</td>
-                <td>
-                  <button onClick={() => handleDelete(e.id)}>
-                    Delete
-                  </button>
-                </td>
+        {expenses.length > 0 && (
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Created At</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+            </thead>
+            <tbody>
+              {expenses.map((e) => (
+                <tr key={e.id}>
+                  <td>{e.title}</td>
+                  <td>{e.amount}</td>
+                  <td>{e.category}</td>
+                  <td>{new Date(e.createdAt).toLocaleString()}</td>
+                  <td>
+                    <button
+                      className="btn secondary"
+                      onClick={() => handleDelete(e.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }
