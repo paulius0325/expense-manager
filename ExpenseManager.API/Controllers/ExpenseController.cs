@@ -35,5 +35,12 @@ namespace ExpenseManager.API.Controllers
             await _service.DeleteAsync(id);
             return NoContent();
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateExpense(int id, [FromBody] CreateExpenseDto dto)
+        {
+            var result = await _service.UpdateAsync(id, dto);
+            return Ok(result);
+        }
     }
 }

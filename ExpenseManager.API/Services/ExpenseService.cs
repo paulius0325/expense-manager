@@ -78,6 +78,46 @@ namespace ExpenseManager.API.Services
             await _repository.DeleteAsync(expense);
         }
 
+        public async Task<ExpenseDto> UpdateAsync(int id, CreateExpenseDto dto)
+        {
+            var expense = await _repository.GetByIdAsync(id);
+
+            if (expense == null)
+                throw new KeyNotFoundException("Expense not found");
+
+            if (dto.Amount <= 0)
+                throw new ArgumentException("Amount must be greater than zero");
+
+            if (dto.Amount > 10000)
+                throw new ArgumentException("Amount too large");
+
+            var title = dto.Title?.Trim();
+
+            if (string.IsNullOrWhiteSpace(title))
+                throw new ArgumentException("Title is required");
+
+            if (!System.Text.RegularExpressions.Regex.IsMatch(title, @"^[a-zA-Z\s]+$"))
+                throw new ArgumentException("Title must contain only letters");
+
+            if (!Enum.IsDefined(typeof(ExpenseCategory), dto.Category))
+                throw new ArgumentException("Invalid category");
+
+            expense.Title = title;
+            expense.Amount = dto.Amount;
+            expense.Category = dto.Category;
+
+            await _repository.UpdateAsync(expense);
+
+            return new ExpenseDto
+            {
+                Id = expense.Id,
+                Title = expense.Title,
+                Amount = expense.Amount,
+                Category = expense.Category.ToString(),
+                CreatedAt = expense.CreatedAt
+            };
+        }
+
 
     }
 }

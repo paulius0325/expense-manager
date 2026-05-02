@@ -52,5 +52,11 @@ namespace ExpenseManager.API.Repositories
             _context.Expenses.Remove(expense);
             await _context.SaveChangesAsync();
         }
+
+        public async Task UpdateAsync(Expense expense)
+        {
+            _context.Expenses.Update(expense);
+            await _context.SaveChangesAsync();
+        }
     }
 }

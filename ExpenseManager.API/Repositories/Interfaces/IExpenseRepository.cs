@@ -8,5 +8,6 @@ namespace ExpenseManager.API.Repositories.Interfaces
         Task<IEnumerable<Expense>> GetAllAsync(string? category);
         Task<Expense?> GetByIdAsync(int id);
         Task DeleteAsync(Expense expense);
+        Task UpdateAsync(Expense expense);
     }
 }

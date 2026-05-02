@@ -9,5 +9,6 @@ namespace ExpenseManager.API.Services.Interfaces
         Task<Expense> CreateAsync(CreateExpenseDto dto);
         Task<IEnumerable<ExpenseDto>> GetAllAsync(string? category);
         Task DeleteAsync(int id);
+        Task<ExpenseDto> UpdateAsync(int id, CreateExpenseDto dto);
     }
 }

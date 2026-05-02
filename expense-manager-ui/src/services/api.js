@@ -14,3 +14,6 @@ export const getExpenses = (category) => {
 
 export const deleteExpense = (id) =>
   axios.delete(`${API_URL}/expense/${id}`);
+
+export const updateExpense = (id, data) =>
+  axios.put(`${API_URL}/expense/${id}`, data);
