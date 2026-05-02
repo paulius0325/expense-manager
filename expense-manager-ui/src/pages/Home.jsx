@@ -21,7 +21,6 @@ export default function Home() {
     category: ""
   });
 
-  // edit validation errors
   const [editErrors, setEditErrors] = useState({});
 
   const loadExpenses = async () => {
@@ -58,7 +57,7 @@ export default function Home() {
     }
   };
 
-  // VALIDATION (INLINE EDIT)
+  // VALIDATION
   const validateEdit = () => {
     const newErrors = {};
 
@@ -74,15 +73,12 @@ export default function Home() {
       newErrors.category = "Category is required";
 
     setEditErrors(newErrors);
-
     return Object.keys(newErrors).length === 0;
   };
 
-  // PREFILL
   const handleEdit = (expense) => {
     setEditingId(expense.id);
     setEditErrors({});
-
     setEditForm({
       title: expense.title,
       amount: expense.amount,
@@ -90,7 +86,6 @@ export default function Home() {
     });
   };
 
-  // UPDATE
   const handleUpdate = async () => {
     if (!validateEdit()) return;
 
@@ -103,12 +98,11 @@ export default function Home() {
 
       setMessage("success: expense updated");
       setEditingId(null);
-      setEditErrors({}); 
+      setEditErrors({});
       loadExpenses();
     } catch (err) {
       const errorMsg =
         err.response?.data?.error || "error updating expense";
-
       setMessage(errorMsg);
     }
   };
@@ -157,133 +151,128 @@ export default function Home() {
         )}
 
         {expenses.length > 0 && (
-          <table>
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Amount</th>
-                <th>Category</th>
-                <th>Created At</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {expenses.map((e) => (
-                <tr key={e.id}>
-                  {editingId === e.id ? (
-                    <>
-                      {/* TITLE */}
-                      <td>
-                        <input
-                          value={editForm.title}
-                          onChange={(ev) =>
-                            setEditForm({
-                              ...editForm,
-                              title: ev.target.value
-                            })
-                          }
-                        />
-                        {editErrors.title && (
-                          <div className="error-box">
-                            {editErrors.title}
-                          </div>
-                        )}
-                      </td>
-
-                      {/* AMOUNT */}
-                      <td>
-                        <input
-                          type="number"
-                          value={editForm.amount}
-                          onChange={(ev) =>
-                            setEditForm({
-                              ...editForm,
-                              amount: ev.target.value
-                            })
-                          }
-                        />
-                        {editErrors.amount && (
-                          <div className="error-box">
-                            {editErrors.amount}
-                          </div>
-                        )}
-                      </td>
-
-                      {/* CATEGORY */}
-                      <td>
-                        <select
-                          value={editForm.category}
-                          onChange={(ev) =>
-                            setEditForm({
-                              ...editForm,
-                              category: ev.target.value
-                            })
-                          }
-                        >
-                          <option value="">Select category</option>
-                          <option value="Food">Food</option>
-                          <option value="Travel">Travel</option>
-                          <option value="Utilities">Utilities</option>
-                          <option value="Entertainment">Entertainment</option>
-                          <option value="Other">Other</option>
-                        </select>
-
-                        {editErrors.category && (
-                          <div className="error-box">
-                            {editErrors.category}
-                          </div>
-                        )}
-                      </td>
-
-                      <td colSpan="2">
-                        <button
-                          className="btn primary"
-                          onClick={handleUpdate}
-                        >
-                          Save
-                        </button>
-
-                        <button
-                          className="btn secondary"
-                          onClick={() => {
-                            setEditingId(null);
-                            setEditErrors({});
-                          }}
-                        >
-                          Cancel
-                        </button>
-                      </td>
-                    </>
-                  ) : (
-                    <>
-                      <td>{e.title}</td>
-                      <td>{e.amount}</td>
-                      <td>{e.category}</td>
-                      <td>
-                        {new Date(e.createdAt).toLocaleString()}
-                      </td>
-                      <td>
-                        <button
-                          className="btn primary"
-                          onClick={() => handleEdit(e)}
-                        >
-                          Edit
-                        </button>
-
-                        <button
-                          className="btn secondary"
-                          onClick={() => handleDelete(e.id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </>
-                  )}
+          <div className="table-wrapper"> {/* ✅ FIX */}
+            <table>
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Amount</th>
+                  <th>Category</th>
+                  <th>Created At</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {expenses.map((e) => (
+                  <tr key={e.id}>
+                    {editingId === e.id ? (
+                      <>
+                        <td>
+                          <input
+                            value={editForm.title}
+                            onChange={(ev) =>
+                              setEditForm({
+                                ...editForm,
+                                title: ev.target.value
+                              })
+                            }
+                          />
+                          {editErrors.title && (
+                            <div className="error-box">{editErrors.title}</div>
+                          )}
+                        </td>
+
+                        <td>
+                          <input
+                            type="number"
+                            value={editForm.amount}
+                            onChange={(ev) =>
+                              setEditForm({
+                                ...editForm,
+                                amount: ev.target.value
+                              })
+                            }
+                          />
+                          {editErrors.amount && (
+                            <div className="error-box">{editErrors.amount}</div>
+                          )}
+                        </td>
+
+                        <td>
+                          <select
+                            value={editForm.category}
+                            onChange={(ev) =>
+                              setEditForm({
+                                ...editForm,
+                                category: ev.target.value
+                              })
+                            }
+                          >
+                            <option value="">Select category</option>
+                            <option value="Food">Food</option>
+                            <option value="Travel">Travel</option>
+                            <option value="Utilities">Utilities</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Other">Other</option>
+                          </select>
+
+                          {editErrors.category && (
+                            <div className="error-box">
+                              {editErrors.category}
+                            </div>
+                          )}
+                        </td>
+
+                        <td colSpan="2">
+                          <button
+                            className="btn primary"
+                            onClick={handleUpdate}
+                          >
+                            Save
+                          </button>
+
+                          <button
+                            className="btn secondary"
+                            onClick={() => {
+                              setEditingId(null);
+                              setEditErrors({});
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td>{e.title}</td>
+                        <td>{e.amount}</td>
+                        <td>{e.category}</td>
+                        <td>
+                          {new Date(e.createdAt).toLocaleString()}
+                        </td>
+                        <td>
+                          <button
+                            className="btn primary"
+                            onClick={() => handleEdit(e)}
+                          >
+                            Edit
+                          </button>
+
+                          <button
+                            className="btn secondary"
+                            onClick={() => handleDelete(e.id)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>

@@ -4,6 +4,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: #1f2937;
+  overflow-x: hidden; 
 }
 
 /* Container */
@@ -11,6 +12,7 @@ body {
   max-width: 1000px;
   margin: 40px auto;
   padding: 0 20px;
+  width: 100%; 
 }
 
 /* Cards */
@@ -31,21 +33,18 @@ h2 {
   margin-bottom: 15px;
 }
 
-/* Spacing system */
+/* FORM */
 .form-row {
   display: flex;
   gap: 10px;
   margin-bottom: 15px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; 
 }
 
-/* INPUT sizing  */
-.form-row input:first-child {
-  flex: 2;
-}
-
-.form-row input:nth-child(2) {
+.form-row input,
+.form-row select {
   flex: 1;
+  min-width: 120px;
 }
 
 /* INPUTS */
@@ -63,14 +62,15 @@ select:focus {
   border-color: #2563eb;
 }
 
-/* Buttons */
+/* BUTTONS */
 .btn {
-  padding: 10px 14px;
+  padding: 12px 16px; 
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
   transition: all 0.2s ease;
+  min-height: 40px; 
 }
 
 .primary {
@@ -83,7 +83,6 @@ select:focus {
   color: white;
 }
 
-/* DELETE hover fix  */
 .secondary:hover {
   background-color: #dc2626;
 }
@@ -93,7 +92,7 @@ select:focus {
   opacity: 0.9;
 }
 
-/* Messages */
+/* MESSAGES */
 .message {
   padding: 10px;
   border-radius: 6px;
@@ -110,7 +109,7 @@ select:focus {
   color: #991b1b;
 }
 
-/* ERROR BOX  */
+/* ERROR BOX */
 .error-box {
   background: #fef2f2;
   color: #991b1b;
@@ -119,13 +118,12 @@ select:focus {
   margin-top: 5px;
 }
 
-/* fallback */
-.error {
-  color: #dc2626;
-  margin-top: 5px;
+/* TABLE */
+.table-wrapper {
+  overflow-x: auto; 
+  width: 100%;
 }
 
-/* Table */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -139,24 +137,24 @@ th {
   padding: 12px;
   background-color: #f9fafb;
   font-weight: 600;
+  word-break: break-word; 
 }
 
 td {
   padding: 12px;
   border-top: 1px solid #f0f0f0;
+  word-break: break-word; 
 }
 
-/* Zebra rows  */
 tbody tr:nth-child(even) {
   background-color: #fafafa;
 }
 
-/* Hover */
 tbody tr:hover {
   background-color: #f9fafb;
 }
 
-/* Empty state */
+/* EMPTY */
 .empty {
   padding: 15px;
   background: #f9fafb;
@@ -164,14 +162,31 @@ tbody tr:hover {
   text-align: center;
 }
 
-/* Responsive */
+/* MOBILE */
 @media (max-width: 600px) {
-  .form-row {
-    flex-direction: column;
+  .container {
+    margin: 20px auto; 
   }
 
-  table {
-    display: block;
-    overflow-x: auto;
+  .section {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .form-row {
+    flex-direction: column; 
+  }
+
+  .form-row input,
+  .form-row select,
+  .form-row button {
+    width: 100%;
   }
 }
