@@ -1,6 +1,19 @@
 import axios from "axios";
 const API_URL = "https://localhost:7100/api";
 
+export const handleError = (err) => {
+  if (err.response?.data?.error)
+    return err.response.data.error;
+
+  if (err.response?.data)
+    return err.response.data;
+
+  if (err.request)
+    return "Server unreachable";
+
+  return "Something went wrong";
+};
+
 export const createExpense = (data) =>
   axios.post(`${API_URL}/expense`, data);
 

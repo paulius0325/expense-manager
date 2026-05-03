@@ -4,7 +4,8 @@ import {
   createExpense,
   getExpenses,
   deleteExpense,
-  updateExpense
+  updateExpense,
+  handleError
 } from "../services/api";
 
 export default function Home() {
@@ -29,35 +30,34 @@ export default function Home() {
       const res = await getExpenses(selectedCategory);
       setExpenses(res.data);
     } catch (err) {
-      setMessage("error loading expenses");
+      setMessage(handleError(err));
+      setExpenses([]);
     }
   };
 
+  // CREATE
   const handleCreate = async (data) => {
     try {
       await createExpense(data);
       setMessage("success: expense created");
       loadExpenses();
     } catch (err) {
-      const errorMsg =
-        err.response?.data?.error || "error: something went wrong";
-      setMessage(errorMsg);
+      setMessage(handleError(err));
     }
   };
 
+  // DELETE
   const handleDelete = async (id) => {
     try {
       await deleteExpense(id);
       setMessage("success: expense deleted");
       loadExpenses();
     } catch (err) {
-      const errorMsg =
-        err.response?.data?.error || "error deleting expense";
-      setMessage(errorMsg);
+      setMessage(handleError(err));
     }
   };
 
-  // VALIDATION
+  // VALIDATION 
   const validateEdit = () => {
     const newErrors = {};
 
@@ -76,9 +76,11 @@ export default function Home() {
     return Object.keys(newErrors).length === 0;
   };
 
+  // PREFILL
   const handleEdit = (expense) => {
     setEditingId(expense.id);
     setEditErrors({});
+
     setEditForm({
       title: expense.title,
       amount: expense.amount,
@@ -86,6 +88,7 @@ export default function Home() {
     });
   };
 
+  // UPDATE
   const handleUpdate = async () => {
     if (!validateEdit()) return;
 
@@ -101,9 +104,7 @@ export default function Home() {
       setEditErrors({});
       loadExpenses();
     } catch (err) {
-      const errorMsg =
-        err.response?.data?.error || "error updating expense";
-      setMessage(errorMsg);
+      setMessage(handleError(err));
     }
   };
 
@@ -151,7 +152,7 @@ export default function Home() {
         )}
 
         {expenses.length > 0 && (
-          <div className="table-wrapper"> {/* ✅ FIX */}
+          <div className="table-wrapper">
             <table>
               <thead>
                 <tr>
@@ -168,6 +169,7 @@ export default function Home() {
                   <tr key={e.id}>
                     {editingId === e.id ? (
                       <>
+                        {/* TITLE */}
                         <td>
                           <input
                             value={editForm.title}
@@ -179,10 +181,13 @@ export default function Home() {
                             }
                           />
                           {editErrors.title && (
-                            <div className="error-box">{editErrors.title}</div>
+                            <div className="error-box">
+                              {editErrors.title}
+                            </div>
                           )}
                         </td>
 
+                        {/* AMOUNT */}
                         <td>
                           <input
                             type="number"
@@ -195,10 +200,13 @@ export default function Home() {
                             }
                           />
                           {editErrors.amount && (
-                            <div className="error-box">{editErrors.amount}</div>
+                            <div className="error-box">
+                              {editErrors.amount}
+                            </div>
                           )}
                         </td>
 
+                        {/* CATEGORY */}
                         <td>
                           <select
                             value={editForm.category}
@@ -251,6 +259,7 @@ export default function Home() {
                         <td>
                           {new Date(e.createdAt).toLocaleString()}
                         </td>
+
                         <td>
                           <button
                             className="btn primary"
