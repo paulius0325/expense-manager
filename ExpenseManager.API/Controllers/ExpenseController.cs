@@ -23,9 +23,9 @@ namespace ExpenseManager.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetExpenses([FromQuery] string? category)
+        public async Task<IActionResult> GetExpenses([FromQuery] string? category, [FromQuery] string? title)
         {
-            var expenses = await _service.GetAllAsync(category);
+            var expenses = await _service.GetAllAsync(category, title);
             return Ok(expenses);
         }
 
@@ -42,5 +42,6 @@ namespace ExpenseManager.API.Controllers
             var result = await _service.UpdateAsync(id, dto);
             return Ok(result);
         }
+
     }
 }

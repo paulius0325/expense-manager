@@ -12,7 +12,9 @@ export default function Home() {
   const [message, setMessage] = useState("");
   const [expenses, setExpenses] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
+
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   // EDIT STATE
   const [editingId, setEditingId] = useState(null);
@@ -24,10 +26,16 @@ export default function Home() {
 
   const [editErrors, setEditErrors] = useState({});
 
+  // UNIVERSAL LOAD (ALL / FILTER / SEARCH)
   const loadExpenses = async () => {
     try {
       setHasLoaded(true);
-      const res = await getExpenses(selectedCategory);
+
+      const res = await getExpenses(
+        selectedCategory,
+        searchTerm
+      );
+
       setExpenses(res.data);
     } catch (err) {
       setMessage(handleError(err));
@@ -57,7 +65,7 @@ export default function Home() {
     }
   };
 
-  // VALIDATION 
+  // VALIDATION
   const validateEdit = () => {
     const newErrors = {};
 
@@ -129,7 +137,14 @@ export default function Home() {
       <div className="section">
         <h2>Expenses</h2>
 
+        {/*SEARCH + FILTER */}
         <div className="form-row">
+          <input
+            placeholder="Search by title"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
@@ -143,14 +158,16 @@ export default function Home() {
           </select>
 
           <button className="btn primary" onClick={loadExpenses}>
-            Filter
+            Search
           </button>
         </div>
 
+        {/* EMPTY */}
         {hasLoaded && expenses.length === 0 && (
           <div className="empty">No expenses found</div>
         )}
 
+        {/* TABLE */}
         {expenses.length > 0 && (
           <div className="table-wrapper">
             <table>
@@ -169,7 +186,6 @@ export default function Home() {
                   <tr key={e.id}>
                     {editingId === e.id ? (
                       <>
-                        {/* TITLE */}
                         <td>
                           <input
                             value={editForm.title}
@@ -187,7 +203,6 @@ export default function Home() {
                           )}
                         </td>
 
-                        {/* AMOUNT */}
                         <td>
                           <input
                             type="number"
@@ -206,7 +221,6 @@ export default function Home() {
                           )}
                         </td>
 
-                        {/* CATEGORY */}
                         <td>
                           <select
                             value={editForm.category}

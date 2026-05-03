@@ -46,6 +46,13 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {

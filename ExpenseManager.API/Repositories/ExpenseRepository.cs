@@ -21,10 +21,11 @@ namespace ExpenseManager.API.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Expense>> GetAllAsync(string? category)
+        public async Task<IEnumerable<Expense>> GetAllAsync(string? category, string? title)
         {
             var query = _context.Expenses.AsQueryable();
 
+            // CATEGORY filter
             if (!string.IsNullOrWhiteSpace(category))
             {
                 if (Enum.TryParse<ExpenseCategory>(category, true, out var parsed))
@@ -35,6 +36,15 @@ namespace ExpenseManager.API.Repositories
                 {
                     throw new ArgumentException("Invalid category");
                 }
+            }
+
+            //TITLE SEARCH
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                var lowered = title.ToLower();
+
+                query = query.Where(e =>
+                    e.Title.ToLower().Contains(lowered));
             }
 
             return await query

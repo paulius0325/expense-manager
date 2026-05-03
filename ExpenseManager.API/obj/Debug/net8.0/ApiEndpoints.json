@@ -27,6 +27,11 @@
         "Name": "category",
         "Type": "System.String",
         "IsRequired": false
+      },
+      {
+        "Name": "title",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

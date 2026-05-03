@@ -54,9 +54,9 @@ namespace ExpenseManager.API.Services
             return expense;
         }
 
-        public async Task<IEnumerable<ExpenseDto>> GetAllAsync(string? category)
+        public async Task<IEnumerable<ExpenseDto>> GetAllAsync(string? category, string? title)
         {
-            var expenses = await _repository.GetAllAsync(category);
+            var expenses = await _repository.GetAllAsync(category, title);
 
             return expenses.Select(e => new ExpenseDto
             {

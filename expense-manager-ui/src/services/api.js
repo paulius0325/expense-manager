@@ -17,12 +17,19 @@ export const handleError = (err) => {
 export const createExpense = (data) =>
   axios.post(`${API_URL}/expense`, data);
 
-export const getExpenses = (category) => {
-  if (!category) {
-    return axios.get(`${API_URL}/expense`);
+export const getExpenses = (category, title) => {
+  let url = `${API_URL}/expense`;
+
+  const params = [];
+
+  if (category) params.push(`category=${category}`);
+  if (title) params.push(`title=${title}`);
+
+  if (params.length > 0) {
+    url += "?" + params.join("&");
   }
 
-  return axios.get(`${API_URL}/expense?category=${category}`);
+  return axios.get(url);
 };
 
 export const deleteExpense = (id) =>
