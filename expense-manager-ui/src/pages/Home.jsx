@@ -1,23 +1,21 @@
 import { useState } from "react";
 import ExpenseForm from "../components/ExpenseForm";
-import {
-  createExpense,
-  getExpenses,
-  deleteExpense,
-  updateExpense,
-  handleError
-} from "../services/api";
+
+import { createExpense, getExpenses, deleteExpense, updateExpense, handleError } from "../services/api";
 
 export default function Home() {
   const [message, setMessage] = useState("");
   const [expenses, setExpenses] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
-
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
+  // SORTING
+  const [sortBy, setSortBy] = useState("");
+
   // EDIT STATE
   const [editingId, setEditingId] = useState(null);
+
   const [editForm, setEditForm] = useState({
     title: "",
     amount: "",
@@ -26,14 +24,15 @@ export default function Home() {
 
   const [editErrors, setEditErrors] = useState({});
 
-  // UNIVERSAL LOAD (ALL / FILTER / SEARCH)
+  // UNIVERSAL LOAD
   const loadExpenses = async () => {
     try {
       setHasLoaded(true);
 
       const res = await getExpenses(
         selectedCategory,
-        searchTerm
+        searchTerm,
+        sortBy
       );
 
       setExpenses(res.data);
@@ -47,7 +46,9 @@ export default function Home() {
   const handleCreate = async (data) => {
     try {
       await createExpense(data);
+
       setMessage("success: expense created");
+
       loadExpenses();
     } catch (err) {
       setMessage(handleError(err));
@@ -58,7 +59,9 @@ export default function Home() {
   const handleDelete = async (id) => {
     try {
       await deleteExpense(id);
+
       setMessage("success: expense deleted");
+
       loadExpenses();
     } catch (err) {
       setMessage(handleError(err));
@@ -72,21 +75,31 @@ export default function Home() {
     if (!editForm.title.trim())
       newErrors.title = "Title is required";
     else if (!/^[a-zA-Z\s]+$/.test(editForm.title))
-      newErrors.title = "Title must contain only letters";
+      newErrors.title =
+        "Title must contain only letters";
 
-    if (!editForm.amount || Number(editForm.amount) <= 0)
-      newErrors.amount = "Amount must be greater than 0";
+    if (
+      !editForm.amount ||
+      Number(editForm.amount) <= 0
+    )
+      newErrors.amount =
+        "Amount must be greater than 0";
 
     if (!editForm.category)
-      newErrors.category = "Category is required";
+      newErrors.category =
+        "Category is required";
 
     setEditErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+
+    return (
+      Object.keys(newErrors).length === 0
+    );
   };
 
   // PREFILL
   const handleEdit = (expense) => {
     setEditingId(expense.id);
+
     setEditErrors({});
 
     setEditForm({
@@ -108,8 +121,11 @@ export default function Home() {
       });
 
       setMessage("success: expense updated");
+
       setEditingId(null);
+
       setEditErrors({});
+
       loadExpenses();
     } catch (err) {
       setMessage(handleError(err));
@@ -127,7 +143,9 @@ export default function Home() {
       {message && (
         <p
           className={`message ${
-            message.includes("success") ? "success" : "error-message"
+            message.includes("success")
+              ? "success"
+              : "error-message"
           }`}
         >
           {message}
@@ -137,35 +155,79 @@ export default function Home() {
       <div className="section">
         <h2>Expenses</h2>
 
-        {/*SEARCH + FILTER */}
+        {/* SEARCH + FILTER + SORT */}
         <div className="form-row">
           <input
             placeholder="Search by title"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) =>
+              setSearchTerm(e.target.value)
+            }
           />
 
           <select
             value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
+            onChange={(e) =>
+              setSelectedCategory(
+                e.target.value
+              )
+            }
           >
             <option value="">All</option>
             <option value="Food">Food</option>
             <option value="Travel">Travel</option>
-            <option value="Utilities">Utilities</option>
-            <option value="Entertainment">Entertainment</option>
+            <option value="Utilities">
+              Utilities
+            </option>
+            <option value="Entertainment">
+              Entertainment
+            </option>
             <option value="Other">Other</option>
           </select>
 
-          <button className="btn primary" onClick={loadExpenses}>
+          {/* SORT */}
+          <select
+            value={sortBy}
+            onChange={(e) =>
+              setSortBy(e.target.value)
+            }
+          >
+            <option value="">
+              Default
+            </option>
+
+            <option value="date_desc">
+              Newest
+            </option>
+
+            <option value="date_asc">
+              Oldest
+            </option>
+
+            <option value="amount_desc">
+              Highest Amount
+            </option>
+
+            <option value="amount_asc">
+              Lowest Amount
+            </option>
+          </select>
+
+          <button
+            className="btn primary"
+            onClick={loadExpenses}
+          >
             Search
           </button>
         </div>
 
         {/* EMPTY */}
-        {hasLoaded && expenses.length === 0 && (
-          <div className="empty">No expenses found</div>
-        )}
+        {hasLoaded &&
+          expenses.length === 0 && (
+            <div className="empty">
+              No expenses found
+            </div>
+          )}
 
         {/* TABLE */}
         {expenses.length > 0 && (
@@ -186,81 +248,102 @@ export default function Home() {
                   <tr key={e.id}>
                     {editingId === e.id ? (
                       <>
+                        {/* TITLE */}
                         <td>
                           <input
                             value={editForm.title}
                             onChange={(ev) =>
                               setEditForm({
                                 ...editForm,
-                                title: ev.target.value
+                                title:
+                                  ev.target.value
                               })
                             }
                           />
+
                           {editErrors.title && (
                             <div className="error-box">
-                              {editErrors.title}
+                              {
+                                editErrors.title
+                              }
                             </div>
                           )}
                         </td>
 
+                        {/* AMOUNT */}
                         <td>
                           <input
                             type="number"
-                            value={editForm.amount}
+                            value={
+                              editForm.amount
+                            }
                             onChange={(ev) =>
                               setEditForm({
                                 ...editForm,
-                                amount: ev.target.value
+                                amount:
+                                  ev.target.value
                               })
                             }
                           />
+
                           {editErrors.amount && (
                             <div className="error-box">
-                              {editErrors.amount}
+                              {
+                                editErrors.amount
+                              }
                             </div>
                           )}
                         </td>
 
+                        {/* CATEGORY */}
                         <td>
-                          <select
-                            value={editForm.category}
-                            onChange={(ev) =>
-                              setEditForm({
-                                ...editForm,
-                                category: ev.target.value
+                          <select value={editForm.category}
+                            onChange={(ev) => setEditForm({
+                                ...editForm, category: ev.target.value
                               })
                             }
                           >
-                            <option value="">Select category</option>
-                            <option value="Food">Food</option>
-                            <option value="Travel">Travel</option>
-                            <option value="Utilities">Utilities</option>
-                            <option value="Entertainment">Entertainment</option>
-                            <option value="Other">Other</option>
+                            <option value="">
+                              Select category
+                            </option>
+
+                            <option value="Food">
+                              Food
+                            </option>
+
+                            <option value="Travel">
+                              Travel
+                            </option>
+
+                            <option value="Utilities">
+                              Utilities
+                            </option>
+
+                            <option value="Entertainment">
+                              Entertainment
+                            </option>
+
+                            <option value="Other">
+                              Other
+                            </option>
                           </select>
 
                           {editErrors.category && (
                             <div className="error-box">
-                              {editErrors.category}
+                              {
+                                editErrors.category
+                              }
                             </div>
                           )}
                         </td>
 
                         <td colSpan="2">
-                          <button
-                            className="btn primary"
-                            onClick={handleUpdate}
-                          >
+                          <button className="btn primary" onClick={handleUpdate}>
                             Save
                           </button>
 
                           <button
-                            className="btn secondary"
-                            onClick={() => {
-                              setEditingId(null);
-                              setEditErrors({});
-                            }}
-                          >
+                            className="btn secondary" onClick={() => {setEditingId(null); setEditErrors( {} ); }} >
                             Cancel
                           </button>
                         </td>
@@ -268,24 +351,21 @@ export default function Home() {
                     ) : (
                       <>
                         <td>{e.title}</td>
+
                         <td>{e.amount}</td>
+
                         <td>{e.category}</td>
+
                         <td>
-                          {new Date(e.createdAt).toLocaleString()}
+                          {new Date( e.createdAt ).toLocaleString()}
                         </td>
 
                         <td>
-                          <button
-                            className="btn primary"
-                            onClick={() => handleEdit(e)}
-                          >
+                          <button className="btn primary" onClick = { () => handleEdit(e) } >
                             Edit
                           </button>
 
-                          <button
-                            className="btn secondary"
-                            onClick={() => handleDelete(e.id)}
-                          >
+                          <button className="btn secondary" onClick = { () => handleDelete( e.id) } >
                             Delete
                           </button>
                         </td>

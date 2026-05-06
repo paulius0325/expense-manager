@@ -32,6 +32,11 @@
         "Name": "title",
         "Type": "System.String",
         "IsRequired": false
+      },
+      {
+        "Name": "sortBy",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

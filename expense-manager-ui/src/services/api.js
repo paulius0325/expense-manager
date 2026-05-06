@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const API_URL = "https://localhost:7100/api";
 
 export const handleError = (err) => {
@@ -17,13 +18,32 @@ export const handleError = (err) => {
 export const createExpense = (data) =>
   axios.post(`${API_URL}/expense`, data);
 
-export const getExpenses = (category, title) => {
+export const getExpenses = (
+  category,
+  title,
+  sortBy
+) => {
   let url = `${API_URL}/expense`;
 
   const params = [];
 
-  if (category) params.push(`category=${category}`);
-  if (title) params.push(`title=${title}`);
+  // CATEGORY
+  if (category)
+    params.push(
+      `category=${encodeURIComponent(category)}`
+    );
+
+  // TITLE SEARCH
+  if (title)
+    params.push(
+      `title=${encodeURIComponent(title)}`
+    );
+
+  // SORTING
+  if (sortBy)
+    params.push(
+      `sortBy=${encodeURIComponent(sortBy)}`
+    );
 
   if (params.length > 0) {
     url += "?" + params.join("&");
